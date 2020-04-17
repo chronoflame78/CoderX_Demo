@@ -1,5 +1,6 @@
 var db = require('../db');
 var shortid = require('shortid');
+const quote = "\"";  
 
 module.exports.index = function (req, res){
 	res.render('users/index',{
@@ -31,8 +32,11 @@ module.exports.get = function(req,res){
 };
 
 module.exports.postCreate = function (req, res){
+	debugger;
 	req.body.id = shortid.generate();	
-	console.log(res.locals);
+	req.body.avartar = "uploads/" + req.file.filename;
+	console.log(req.file.path, 'path');
+	console.log(req.body.avartar, 'avartar');
 	db.get('users').push(req.body).write();
 	res.redirect('/users');
 };
