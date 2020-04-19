@@ -11,6 +11,9 @@ var productRoute = require('./routes/product.route');
 var cartRoute = require('./routes/cart.route');
 var transferRoute = require('./routes/transfer.route');
 var csurf = require('csurf');
+var mongoose = require('mongoose');
+
+mongoose.connect(process.env.MONGO_URL);
 
 var authMiddleware = require('./middlewares/auth.middleware');
 var sessionMiddleware = require('./middlewares/session.middleware');
@@ -25,6 +28,7 @@ app.use(cookieParser(process.env.SESSION_SECRET));
 app.use(express.static('public'));
 app.use(sessionMiddleware);
 app.use(csurf({cookie: true}));
+
 
 
 app.get('/', function (req, res){
